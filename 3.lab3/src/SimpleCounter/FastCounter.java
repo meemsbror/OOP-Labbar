@@ -1,6 +1,5 @@
-/**
- * Created by Boy on 2015-09-24.
- */
+package SimpleCounter;
+
 public class FastCounter extends CounterModel {
 
     public void upMany(int up){

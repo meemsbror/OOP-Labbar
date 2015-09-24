@@ -1,3 +1,4 @@
+package SimpleCounter;
 import javax.swing.*;
 public class Main {
 

@@ -1,3 +1,5 @@
+package SimpleCounter;
+
 import javax.swing.*;
 import java.awt.*;
 

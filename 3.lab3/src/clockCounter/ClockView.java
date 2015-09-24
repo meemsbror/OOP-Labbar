@@ -1,6 +1,9 @@
+package ClockCounter;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import SimpleCounter.*;
 
 public class ClockView extends JPanel {
 

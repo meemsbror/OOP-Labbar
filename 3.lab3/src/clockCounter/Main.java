@@ -1,3 +1,4 @@
+package ClockCounter;
 import javax.swing.*;
 public class Main {
 
