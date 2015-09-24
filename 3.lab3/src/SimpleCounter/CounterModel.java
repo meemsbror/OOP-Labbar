@@ -1,6 +1,3 @@
-/**
- * Created by admin on 2015-09-23.
- */
 public class CounterModel implements CounterInterface {
 
     public CounterModel (int modulus){
