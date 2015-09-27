@@ -1,4 +1,4 @@
-package SimpleCounter;
+
 public interface CounterInterface {	
 
 	public void increment();

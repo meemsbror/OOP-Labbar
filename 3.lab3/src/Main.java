@@ -1,16 +1,16 @@
-package SimpleCounter;
 import javax.swing.*;
 public class Main {
 
 	public static void main(String[] args) {
-		CounterInterface cm = new CounterModel();
-		CounterControl control = new CounterControl(cm);
+		ClockView view = new ClockView(	Integer.parseInt(args[0]),
+										Integer.parseInt(args[1]),
+										Integer.parseInt(args[2]));
 		
-		JFrame f = new JFrame("Counter");
+		JFrame f = new JFrame("Clock");	
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.add(control);
+		f.add(view);
 		f.setLocation(100,100);
 		f.pack();
-		f.setVisible(true); 
+		f.setVisible(true);
 	}
 }

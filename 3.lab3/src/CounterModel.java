@@ -1,6 +1,8 @@
-package SimpleCounter;
 
 public class CounterModel implements CounterInterface {
+
+    private int modulus;
+    private int x = 0;
 
     public CounterModel (int modulus){
         if(modulus > 1){
@@ -13,8 +15,7 @@ public class CounterModel implements CounterInterface {
         modulus = 10;
     }
 
-    private int modulus;
-    private int x = 0;
+
 
     public void increment(){
         x = ++x % modulus;
@@ -41,14 +42,16 @@ public class CounterModel implements CounterInterface {
         return "The counter is at: " + getValue() + ". And the cap is at: " + getModulus();
     }
 
+    //Getters
     public int getModulus() {
         return modulus;
-    }
-    public void reset(){
-        x = 0;
     }
     public int getValue(){
         return x;
     }
+    public void reset(){
+        x = 0;
+    }
+
 
 }
