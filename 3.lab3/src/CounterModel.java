@@ -29,6 +29,16 @@ public class CounterModel implements CounterInterface {
         }
     }
     public boolean equals(Object o){
+
+        if (this==o) {
+            return true;
+        }
+
+        if( o==null || !o.getClass().equals(this.getClass())) {
+            return false;
+        }
+
+
         if(o instanceof CounterModel){
             CounterModel cm = (CounterModel)o;
             if(((CounterModel) o).getValue() == getValue() && ((CounterModel) o).getModulus() == getModulus()){
@@ -52,6 +62,4 @@ public class CounterModel implements CounterInterface {
     public void reset(){
         x = 0;
     }
-
-
 }
