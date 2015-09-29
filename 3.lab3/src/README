@@ -31,5 +31,5 @@ Att de har samma värde på räknaren och samma modulus värde.
 
 Del H) 
 
-Den anropar CounterModels increment så många gånger som steg s�ger.
+Den anropar CounterModels increment så många gånger som step säger.
 Vi gjorde detta med en for-loop
