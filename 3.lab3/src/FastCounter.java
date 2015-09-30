@@ -14,7 +14,7 @@ public class FastCounter extends CounterModel {
 
     public void upMany(){
 
-        for (int i = 0; i <step; i++){
+        for (int i = 0; i < step; i++){
 
             this.increment();
         }
@@ -30,7 +30,7 @@ public class FastCounter extends CounterModel {
     }
 
     public String toString(){
-        return super.toString() + "step: " + step;
+        return super.toString() + " step: " + step;
     }
 
     public boolean equals(Object o){

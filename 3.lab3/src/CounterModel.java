@@ -25,7 +25,7 @@ public class CounterModel implements CounterInterface {
         if(0 != x){
             x--;
         }else{
-            x = 59;
+            x = modulus-1;
         }
     }
     public boolean equals(Object o){

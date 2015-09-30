@@ -28,10 +28,8 @@ public class LabSolver {
             return true;
         }
 
-        System.out.println(l);
         if(l.canMove(Labyrinth.Direction.RIGHT, x0, y0) && !(l.getMark(x0+1, y0))){
             l.setMark(x0+1, y0, true);
-            System.out.println("RIGHT");
             if(findPath(x0+1, y0, x1, y1, l)){
                 return true;
             }else{
@@ -40,7 +38,6 @@ public class LabSolver {
         }
         if(l.canMove(Labyrinth.Direction.LEFT, x0, y0) && !(l.getMark(x0-1, y0))){
             l.setMark(x0-1, y0, true);
-            System.out.println("LEFT");
             if(findPath(x0-1, y0, x1, y1, l)){
                 return true;
             }else{
@@ -49,7 +46,6 @@ public class LabSolver {
         }
         if(l.canMove(Labyrinth.Direction.UP, x0, y0) && !(l.getMark(x0, y0-1))){
             l.setMark(x0, y0-1, true);
-            System.out.println("UP");
             if(findPath(x0, y0-1, x1, y1, l)){
                 return true;
             }else{
@@ -58,7 +54,6 @@ public class LabSolver {
         }
         if(l.canMove(Labyrinth.Direction.DOWN, x0, y0) && !(l.getMark(x0, y0+1))){
             l.setMark(x0, y0 + 1, true);
-            System.out.println("DOWN");
             if(findPath(x0, y0+1, x1, y1, l)){
                 return true;
             }else{
