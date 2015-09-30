@@ -36,6 +36,20 @@ public class LabSolver {
         for (Labyrinth.Direction dir : Labyrinth.Direction.values()) {
             int x=x0;
             int y=y0;
+            /* två rader kortare!!!!111!1!
+            if(dir.equals("RIGHT")) {
+                x++;
+            }
+            else if (dir.equals("LEFT")){
+                x--;
+            }
+            else if (dir.equals("DOWN")){
+                y++;
+            }
+            else if (dir.equals("UP")){
+                y--;
+            }
+            */
             switch (dir) {
                 case RIGHT:
                     x++;
