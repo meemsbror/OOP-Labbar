@@ -39,12 +39,10 @@ public class CounterModel implements CounterInterface {
         }
 
 
-        if(o instanceof CounterModel){
             CounterModel cm = (CounterModel)o;
-            if(((CounterModel) o).getValue() == getValue() && ((CounterModel) o).getModulus() == getModulus()){
+            if(cm.getModulus()==this.getModulus() && cm.getValue()==this.getValue()){
                 return true;
             }
-        }
         return false;
     }
 

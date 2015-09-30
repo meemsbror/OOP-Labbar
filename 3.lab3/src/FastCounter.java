@@ -29,6 +29,19 @@ public class FastCounter extends CounterModel {
         }
     }
 
+    public String toString(){
+        return super.toString() + "step: " + step;
+    }
+
+    public boolean equals(Object o){
+        if(super.equals(o)){
+            FastCounter f = (FastCounter)o;
+            return this.getStep()==f.getStep();
+        }
+
+        return false;
+    }
+
 
     public int getStep(){
         return step;
