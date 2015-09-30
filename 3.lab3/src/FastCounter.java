@@ -1,6 +1,6 @@
 
 public class FastCounter extends CounterModel {
-
+    //Hur många steg den ska hoppa om man anropar metoden up/downMany
     private int step = 5;
 
     public FastCounter(){

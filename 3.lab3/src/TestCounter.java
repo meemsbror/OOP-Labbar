@@ -10,6 +10,9 @@ public class TestCounter {
         FastCounter cm3 = new FastCounter(5, 2);
         ChainedCounterModel cm4 = new ChainedCounterModel(5,10,cm1);
 
+        //Ser om den statiska variabeln är 4.
+        System.out.println("Number of counters created: \t\t" + CounterModel.getNbrOfCounters() + "\t\t---ggshould be 4.");
+
         //Skriver ut och ändrar värden på do olika CounterModel objekten.
         System.out.println("Is cm1 equal to cm2? \t\t\t\t" + cm1.equals(cm2) + " \t---Should give False.");
 
