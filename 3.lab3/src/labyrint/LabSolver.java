@@ -22,14 +22,18 @@ public class LabSolver {
     }
 
     public static boolean findPath(int x0, int y0, int x1, int y1, Labyrinth l) {
-        // EDIT***
-        l.setMark(x0, y0, true);
-        if ((x0 == x1) && (y0 == y1)) {
-            return true;
-        }
 
+        //Sätter rutan som programett studerar just nu till markerad (besökt)
+        l.setMark(x0, y0, true);
+
+        //Basargumentet. Om detta är sant har programmet lyckats och returnerar sant.
+       if ((x0 == x1) && (y0 == y1)) {
+           return true;
+       }
+
+        //Kollar om rutan till höger om platsen programmet tittar på är ockuperad/redan besökt
         if(l.canMove(Labyrinth.Direction.RIGHT, x0, y0) && !(l.getMark(x0+1, y0))){
-            l.setMark(x0+1, y0, true);
+            //är den inte det kollar den från den
             if(findPath(x0+1, y0, x1, y1, l)){
                 return true;
             }else{
@@ -37,7 +41,6 @@ public class LabSolver {
             }
         }
         if(l.canMove(Labyrinth.Direction.LEFT, x0, y0) && !(l.getMark(x0-1, y0))){
-            l.setMark(x0-1, y0, true);
             if(findPath(x0-1, y0, x1, y1, l)){
                 return true;
             }else{
@@ -45,7 +48,6 @@ public class LabSolver {
             }
         }
         if(l.canMove(Labyrinth.Direction.UP, x0, y0) && !(l.getMark(x0, y0-1))){
-            l.setMark(x0, y0-1, true);
             if(findPath(x0, y0-1, x1, y1, l)){
                 return true;
             }else{
@@ -53,7 +55,6 @@ public class LabSolver {
             }
         }
         if(l.canMove(Labyrinth.Direction.DOWN, x0, y0) && !(l.getMark(x0, y0+1))){
-            l.setMark(x0, y0 + 1, true);
             if(findPath(x0, y0+1, x1, y1, l)){
                 return true;
             }else{

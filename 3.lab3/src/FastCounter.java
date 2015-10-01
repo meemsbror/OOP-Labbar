@@ -13,19 +13,14 @@ public class FastCounter extends CounterModel {
     }
 
     public void upMany(){
-
         for (int i = 0; i < step; i++){
-
             this.increment();
         }
     }
 
     public void downMany() {
-
         for (int i = 0; i < step; i++) {
-
             this.decrement();
-
         }
     }
 

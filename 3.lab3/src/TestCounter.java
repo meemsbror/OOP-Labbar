@@ -11,7 +11,7 @@ public class TestCounter {
         ChainedCounterModel cm4 = new ChainedCounterModel(5,10,cm1);
 
         //Ser om den statiska variabeln är 4.
-        System.out.println("Number of counters created: \t\t" + CounterModel.getNbrOfCounters() + "\t\t---ggshould be 4.");
+        System.out.println("Number of counters created: \t\t" + CounterModel.getNbrOfCounters() + "\t\t---Should be 4.");
 
         //Skriver ut och ändrar värden på do olika CounterModel objekten.
         System.out.println("Is cm1 equal to cm2? \t\t\t\t" + cm1.equals(cm2) + " \t---Should give False.");
@@ -24,7 +24,7 @@ public class TestCounter {
         System.out.println("Is cm1 at the same count as cm2?\t" + (cm1.getValue() == cm2.getValue()) + " \t---Should give True.");
 
 
-        System.out.println("Is cm2 equal to cm3? \t\t\t\t" + cm2.equals(cm3) + " \t---Should give False.");
+        System.out.println("Is cm1 equal to cm3? \t\t\t\t" + cm1.equals(cm3) + " \t---Should give False.");
         //Minskar cm2 med 3 så att den stannar på 2 (5-3)
         cm2.decrement();
         cm2.decrement();
@@ -39,5 +39,15 @@ public class TestCounter {
             cm4.increment();
         }
         System.out.println("Did cm1s count increase by one?\t\t" + (cm1.getValue() == 1) + " \t---Should give True.");
+
+        //Testar de olika toString metoderna:
+        System.out.println(cm1);
+        System.out.println(cm2);
+        System.out.println(cm3);
+        System.out.println(cm4);
+
+        //Skapar en ChainedCounterModel med null som in samt ser om nmbOfCounters har uppdaterats
+        ChainedCounterModel cm5 = new ChainedCounterModel(10,20,null);
+        System.out.println(CounterModel.getNbrOfCounters());
     }
 }

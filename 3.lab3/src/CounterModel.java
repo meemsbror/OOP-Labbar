@@ -5,7 +5,7 @@ public class CounterModel implements CounterInterface {
     //De privata instansvariablarna!
     private int modulus;
     private int x = 0;
-    static int nbrOfCounters = 0;
+    private static int nbrOfCounters = 0;
 
 
     //Konstruktur med ett argument!

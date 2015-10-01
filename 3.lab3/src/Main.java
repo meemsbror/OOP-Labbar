@@ -9,7 +9,7 @@ public class Main {
 		JFrame f = new JFrame("Clock");	
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.add(view);
-		f.setLocation(100,100);
+		f.setLocation(100, 100);
 		f.pack();
 		f.setVisible(true);
 	}
