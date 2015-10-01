@@ -1,6 +1,7 @@
 package labyrint;
 
 public class LabSolver {
+    static int counter=0;
 
     public static void main(String[] args) {
         int width = 20;
@@ -22,43 +23,28 @@ public class LabSolver {
     }
 
     public static boolean findPath(int x0, int y0, int x1, int y1, Labyrinth l) {
-
-        //Sätter rutan som programett studerar just nu till markerad (besökt)
-        l.setMark(x0, y0, true);
-
-        //Basargumentet. Om detta är sant har programmet lyckats och returnerar sant.
-       if ((x0 == x1) && (y0 == y1)) {
-           return true;
-       }
-
-        //Kollar om rutan till höger om platsen programmet tittar på är ockuperad/redan besökt
-        if(l.canMove(Labyrinth.Direction.RIGHT, x0, y0) && !(l.getMark(x0+1, y0))){
-            //är den inte det kollar den från den
-            if(findPath(x0+1, y0, x1, y1, l)){
-                return true;
-            }else{
-                l.setMark(x0+1, y0, false);
-            }
-        }
-        if(l.canMove(Labyrinth.Direction.LEFT, x0, y0) && !(l.getMark(x0-1, y0))){
-            if(findPath(x0-1, y0, x1, y1, l)){
-                return true;
-            }else{
-                l.setMark(x0-1, y0, false);
-            }
-        }
-        if(l.canMove(Labyrinth.Direction.UP, x0, y0) && !(l.getMark(x0, y0-1))){
-            if(findPath(x0, y0-1, x1, y1, l)){
-                return true;
-            }else{
-                l.setMark(x0, y0-1, false);
-            }
-        }
-        if(l.canMove(Labyrinth.Direction.DOWN, x0, y0) && !(l.getMark(x0, y0+1))){
-            if(findPath(x0, y0+1, x1, y1, l)){
-                return true;
-            }else{
-                l.setMark(x0, y0+1, false);
+        //Markerar att vi har varit på platsen vi studerar just nu.
+        l.setMark(x0,y0,true);
+        //Basvilkoret som returnerar sant om vi löst labyrinten
+        if ((x0 == x1) && (y0 == y1))
+            return true;
+        //Loopar igenom alla riktningar
+        for (Labyrinth.Direction dir : Labyrinth.Direction.values()) {
+            int x=x0;
+            int y=y0;
+            if(dir.toString().equals("RIGHT"))
+                x++;
+            else if (dir.toString().equals("LEFT"))
+                x--;
+            else if (dir.toString().equals("DOWN"))
+                y++;
+            else if (dir.toString().equals("UP"))
+                y--;
+            if (l.canMove(dir, x0, y0) && !(l.getMark(x,y))) {
+                if(findPath(x,y,x1,y1,l))
+                    return true;
+                else
+                    l.setMark(x,y,false);
             }
         }
         return false;
