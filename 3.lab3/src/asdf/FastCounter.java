@@ -1,5 +1,3 @@
-package 
-
 /**
  * FastCounter är en klass som representerar en räknare som hoppar flera steg åt gången
  * dvs. ökar samt minskar en heltalsvariabel.

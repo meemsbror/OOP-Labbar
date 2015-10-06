@@ -1,0 +1,35 @@
+Grupp 3.lab3
+
+Frej Karlsson Arvid Björklund
+
+
+Svar på frågor:
+
+Del B)
+
+koden som skrivs ut är:
+
+k=5
+a=1
+b=0
+
+När vi skickar k till changeValues skickar vi bara värdet, som läggs i en separat minnesplats som n pekar på, k pekar på en separat minnesplats och påverkas därför inte när vi ökar värdet på n.
+
+a och skiljer sig och vi skickar ist�llet med en address till minnesplatsen. c1 pekar därför på samma minnesplats som a och samma gäller för c2 och b. Därför ändras värdet i a när vi ändrar på c1, dom pekar på samma minnesplats.
+
+Del C)
+
+När vi gör instansvariabeln till static blir den samma för alla räknare. Vi kan därför inte skapa räknare som har olika värden, utan alla kommer ha samma värde. D.V.S. om vi ökar värdet på en räknare kommer värdet för alla andra räknare också få ett äkat värde.
+
+Metoden getNbrOfCounters bör vara statisk då den inte rör en speciell räknare utan rör klassen och hur många räknare den skapat. Självklart går det att ha metoden som en instansmetod men vi måste fortfarande ha en klassvariabel som håller koll på hur många räknare det finns. Detta är dock helt meningslöst då du kommer få samma svar oavsett vilken räknare du frågar.
+
+
+Del E)
+
+Att de har samma värde på räknaren och samma modulus värde.
+
+
+Del H) 
+
+Den anropar CounterModels increment så många gånger som step säger.
+Vi gjorde detta med en for-loop
