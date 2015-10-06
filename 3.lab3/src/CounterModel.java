@@ -13,7 +13,7 @@ public class CounterModel implements CounterInterface {
         if(modulus > 1){
             this.modulus = modulus;
         }else{
-            throw new IllegalArgumentException("For input: " + modulus);
+            throw new IllegalArgumentException("Bad input for input: " + modulus);
         }
         nbrOfCounters +=1;
     }
@@ -46,13 +46,13 @@ public class CounterModel implements CounterInterface {
             return true;
         }
 
-        if( o==null || !o.getClass().equals(this.getClass())) {
+        if( o==null || !(o.getClass().toString().equals(this.getClass().toString()))) {
             return false;
         }
-            CounterModel cm = (CounterModel)o;
-            if(cm.getModulus()==this.getModulus() && cm.getValue()==this.getValue()){
-                return true;
-            }
+        CounterModel cm = (CounterModel)o;
+        if(cm.getModulus()==this.getModulus() && cm.getValue()==this.getValue()){
+            return true;
+        }
         return false;
     }
 

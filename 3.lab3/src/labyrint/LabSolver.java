@@ -40,7 +40,9 @@ public class LabSolver {
                 y++;
             else if (dir.toString().equals("UP"))
                 y--;
+            //kallar på findPath rekursivt om det går att röra sig i den riktningen vi har i dir och vi inte redan markerat riktningen som True.
             if (l.canMove(dir, x0, y0) && !(l.getMark(x,y))) {
+                //Sätter markeringen false om vi inte hittar någon lösning i den riktningen.
                 if(findPath(x,y,x1,y1,l))
                     return true;
                 else

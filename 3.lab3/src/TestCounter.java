@@ -1,6 +1,3 @@
-/**
- * Created by admin on 2015-09-30.
- */
 public class TestCounter {
     public static void main (String [] args){
         //Skapar 2 CounterModels
@@ -8,6 +5,7 @@ public class TestCounter {
         CounterModel cm2 = new CounterModel(5);
         //Skapar de klasser som ärver utav CounterModel
         FastCounter cm3 = new FastCounter(5, 2);
+        FastCounter cm6 = new FastCounter(5, 2);
         ChainedCounterModel cm4 = new ChainedCounterModel(5,10,cm1);
 
         //Ser om den statiska variabeln är 4.
@@ -39,6 +37,36 @@ public class TestCounter {
             cm4.increment();
         }
         System.out.println("Did cm1s count increase by one?\t\t" + (cm1.getValue() == 1) + " \t---Should give True.");
+
+        cm1.reset();
+        System.out.println("Is cm1 at 0 after reset? "+ (cm1.getValue()==0)+ "\tShould be true");
+
+        cm1.decrement();
+        System.out.println("did cm1 wraparound on decrement?\t"+(cm1.getModulus()-1==cm1.getValue()) + "\tshould be true");
+
+
+        //Testar equals på Fastcounter och countermodel
+        cm3.reset();
+        System.out.println("should be true\t"+cm3.equals(cm6));
+
+        cm3.increment();
+        cm6.increment();
+        System.out.println("should be true\t"+cm3.equals(cm6));
+        cm3.increment();
+        cm6.increment();
+        cm3.increment();
+        cm6.increment();
+        System.out.println("should be true\t"+cm3.equals(cm6));
+
+        //Test illegal argument on Countermodel
+        try {
+            CounterModel cm7 = new CounterModel(-2);
+        }
+        catch (IllegalArgumentException e1){
+            System.out.println(e1.getMessage());
+        }
+
+
 
         //Testar de olika toString metoderna:
         System.out.println(cm1);
