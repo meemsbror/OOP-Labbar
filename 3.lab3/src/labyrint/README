@@ -1,0 +1,11 @@
+Grupp 3.lab3.2
+
+Frej Karlsson Arvid Björklund
+
+
+Framförallt användes metoden "Trial and error". Det vill säga att vi försökte att lösa uppgiften på något sätt,
+identifierade felet och försökte täppa igen det. Vi försökte också följa hur datorn skulle gå igenom koden genom att
+tänka efter och visualisera vad som händer vid varje anrop av sig själv.
+
+Efter att vi fått metoden att fungera tittade vi på koden ochförsökte optimera den, både genom antalet rader
+av kod samt ur prestanda synpunkt, dock framförallt antalet rader kod.

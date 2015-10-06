@@ -1,3 +1,8 @@
+/**
+ * En testklass som testar klasserna CounterModel, FastCounter och ChainedCounterModel
+ * @author Arvid Björklund & Frej Karlsson
+ * @version 3.141592965358979
+ */
 public class TestCounter {
     public static void main (String [] args){
         //Skapar 2 CounterModels

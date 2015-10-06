@@ -28,7 +28,13 @@ public class LabSolver {
         //Basvilkoret som returnerar sant om vi löst labyrinten
         if ((x0 == x1) && (y0 == y1))
             return true;
-        //Loopar igenom alla riktningar
+        /*
+        Loopar igenom alla riktningar och ändrar värde på de nya variablarna x && y som är värdet på nästa plats
+        därefter testas om det går att flytta till platsen x,y (om den är upptagen), går det så anropar metoden
+        sig själv och gör om funktionen med de nya kordinaterna. Om det inte går att flytta någonstans kommer
+        rekursionen kolapsa med värdet false och senaste otestade vägval kommer börja köras igen. Tillslut kommer
+        x0 == x1 && y0 == y1 och rekursionen kommer kolapsa med värdet true samt en markering på varje plats på vägen
+        */
         for (Labyrinth.Direction dir : Labyrinth.Direction.values()) {
             int x=x0;
             int y=y0;
