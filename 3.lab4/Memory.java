@@ -10,6 +10,7 @@ public class Memory extends JFrame{
 
     public int width, height, players, playerTurn;
     public int score[];
+    public Kort kort [][];
 
     public Memory(){
 
@@ -25,8 +26,7 @@ public class Memory extends JFrame{
         players = Integer.valueOf(input);
 
         this.score = new int [players];
-
-        
+        this.kort = new Kort [width] [height];
 
         JPanel main = new JPanel(new BorderLayout());
         JPanel playPanel = new JPanel(new GridLayout(players, 1));
@@ -38,9 +38,10 @@ public class Memory extends JFrame{
         JButton option2 = new JButton("QUIT");
         option1.setActionCommand("new");
         option1.addActionListener(buttons);
-        option2.setActionCommand("quit");
+        option2.setActionCommand("exit");
         option2.addActionListener(buttons);
 
+        nyttSpel();
 
             for(int i = 0; i < players; i++){
                 playPanel.add(new Person(i + 1));
@@ -50,7 +51,6 @@ public class Memory extends JFrame{
 
         optionPanel.add(option1);
         optionPanel.add(option2);
-        optionPanel.setPreferredSize(new Dimension(100, 60));
 
         main.add(playPanel, BorderLayout.WEST);
         main.add(optionPanel, BorderLayout.SOUTH);
@@ -65,9 +65,14 @@ public class Memory extends JFrame{
         setResizable(false);
         }
 
-    public Kort[][] nyttSpel(){
+    public void nyttSpel(){
+        //Nollställer score
         for(int i = 0; i < score.length;i++){
-            score[i-1]=0;
+            score[i]=0;
+        }
+        for(int i = 0; i < width; i++){
+            for(int k = 0; k < height; k++){
+            }
         }
     }
 
