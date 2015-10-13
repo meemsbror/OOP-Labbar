@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by admin on 2015-10-13.
@@ -24,20 +26,21 @@ public class Memory extends JFrame{
 
         this.score = new int [players];
 
+        
 
         JPanel main = new JPanel(new BorderLayout());
         JPanel playPanel = new JPanel(new GridLayout(players, 1));
         JPanel optionPanel = new JPanel(new FlowLayout());
         JPanel gamePanel = new JPanel(new GridLayout(width, height));
+        Buttons buttons = new Buttons();
 
         JButton option1 = new JButton("NEW");
         JButton option2 = new JButton("QUIT");
-        //option1.addActionListener();
+        option1.setActionCommand("new");
+        option1.addActionListener(buttons);
+        option2.setActionCommand("quit");
+        option2.addActionListener(buttons);
 
-
-            for(int i = 0; i < width*height; i++){
-                gamePanel.add(new Kort(i1, Kort.Status.DOLT));
-            }
 
             for(int i = 0; i < players; i++){
                 playPanel.add(new Person(i + 1));
@@ -62,6 +65,12 @@ public class Memory extends JFrame{
         setResizable(false);
         }
 
+    public Kort[][] nyttSpel(){
+        for(int i = 0; i < score.length;i++){
+            score[i-1]=0;
+        }
+    }
+
 
 
     private class Person extends JPanel{
@@ -79,9 +88,20 @@ public class Memory extends JFrame{
             add(player, BorderLayout.NORTH);
         }
     }
-    /*private class ActionListener implements {
 
-    }*/
+
+    private class Buttons implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String str = e.getActionCommand();
+            System.out.println(str);
+            if(str.equals("exit")){
+                System.exit(0);
+            }else if(str.equals("new")){
+                  //todo
+            }
+        }
+    }
+
     public static void main(String [] args){
         Memory memory = new Memory();}
 }
