@@ -8,7 +8,7 @@ import java.awt.*;
 public class Kort extends JColorfulButton {
     public enum Status{ DOLT, SYNLIGT, SAKNAS}
     private Status status;
-    Icon icon;
+    private Icon icon;
 /*
 
 Exceptions?
@@ -43,7 +43,7 @@ Exceptions?
     }
 
     public boolean sammaBild(Object o){
-        if(o instanceof Kort){
+        if(o.getClass().toString().equals(this.getClass().toString())){
             Kort k = (Kort)o;
             return k.getIcon()==this.getIcon();
         }

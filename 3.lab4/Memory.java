@@ -2,20 +2,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by admin on 2015-10-13.
  */
 public class Memory extends JFrame{
 
-    public int width, height, players, playerTurn;
+    public int width, height, players, playerTurn,pictureCount;
     public int score[];
-    public Kort kort [][];
+    public Kort kort [];
+    private Kort k [];
+    JPanel main,gamePanel,playPanel,optionPanel;
 
     public Memory(){
 
-        //temporär bild hehe
-        OvalIcon i1 = new OvalIcon(50, 50, Color.red, true);
+        File bildmap = new File("bildmap");
+        File [] bilder = bildmap.listFiles();
+
+        k = new Kort[bilder.length];
+        for(int i = 0; i<bilder.length;i++){
+            k[i]= new Kort ( new ImageIcon(bilder[i].getPath()), Kort.Status.SYNLIGT);  
+        }
+
+
 
         //Lägg till exceptions
         String input = JOptionPane.showInputDialog("Bredd?");
@@ -25,13 +35,14 @@ public class Memory extends JFrame{
         input = JOptionPane.showInputDialog("Antal spelare");
         players = Integer.valueOf(input);
 
+        pictureCount=width*height;
         this.score = new int [players];
-        this.kort = new Kort [width] [height];
+        this.kort = new Kort [pictureCount];
 
-        JPanel main = new JPanel(new BorderLayout());
-        JPanel playPanel = new JPanel(new GridLayout(players, 1));
-        JPanel optionPanel = new JPanel(new FlowLayout());
-        JPanel gamePanel = new JPanel(new GridLayout(width, height));
+        main = new JPanel(new BorderLayout());
+        playPanel = new JPanel(new GridLayout(players, 1));
+        optionPanel = new JPanel(new FlowLayout());
+        gamePanel = new JPanel(new GridLayout(width, height));
         Buttons buttons = new Buttons();
 
         JButton option1 = new JButton("NEW");
@@ -43,9 +54,13 @@ public class Memory extends JFrame{
 
         nyttSpel();
 
-            for(int i = 0; i < players; i++){
-                playPanel.add(new Person(i + 1));
-            }
+        for(int i = 0; i < players; i++){
+            playPanel.add(new Person(i + 1));
+        }
+
+        for(int i =0; i<k.length;i++){
+            gamePanel.add(k[i]);
+        }
 
         main.setBackground(Color.BLACK);
 
@@ -67,12 +82,27 @@ public class Memory extends JFrame{
 
     public void nyttSpel(){
         //Nollställer score
-        for(int i = 0; i < score.length;i++){
-            score[i]=0;
+        for(int sc:score){
+            sc=0;
         }
-        for(int i = 0; i < width; i++){
-            for(int k = 0; k < height; k++){
-            }
+
+        Verktyg.slumpOrdning(this.k);
+        for(int i = 0; i<pictureCount/2;i++){
+            kort[i] = this.k[i];
+        }
+        for(int i = pictureCount/2; i<pictureCount;i++){
+            kort[i]=k[i-(pictureCount/2)].copy();
+        }
+        Verktyg.slumpOrdning(k);
+
+
+
+        for(int i = 0; i < width*height; i++){
+                kort[i] = k[i];
+        }
+        System.out.println(k.length + " " + kort.length);
+        for(Kort kor:kort){
+            gamePanel.add(kor);
         }
     }
 
@@ -102,7 +132,7 @@ public class Memory extends JFrame{
             if(str.equals("exit")){
                 System.exit(0);
             }else if(str.equals("new")){
-                  //todo
+                  nyttSpel();
             }
         }
     }
