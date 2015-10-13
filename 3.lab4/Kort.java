@@ -1,4 +1,3 @@
-package Memory;
 
 import javax.swing.*;
 import java.awt.*;
