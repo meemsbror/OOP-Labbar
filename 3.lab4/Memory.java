@@ -8,8 +8,10 @@ import java.io.File;
  * Created by admin on 2015-10-13.
  */
 public class Memory extends JFrame{
-
-    public int width, height, players, playerTurn,pictureCount;
+    public int width = 3;
+    public int height = 2;
+    public int players = 2;
+    public int playerTurn,pictureCount;
     public int score[];
     public Kort kort [];
     private Kort k [];
@@ -22,19 +24,20 @@ public class Memory extends JFrame{
 
         k = new Kort[bilder.length];
         for(int i = 0; i<bilder.length;i++){
-            k[i]= new Kort ( new ImageIcon(bilder[i].getPath()), Kort.Status.SYNLIGT);  
+            k[i]= new Kort ( new ImageIcon(bilder[i].getPath()), Kort.Status.SYNLIGT);
         }
 
 
 
         //Lägg till exceptions
+        /*
         String input = JOptionPane.showInputDialog("Bredd?");
         width = Integer.valueOf(input);
         input = JOptionPane.showInputDialog("Höjd");
         height = Integer.valueOf(input);
         input = JOptionPane.showInputDialog("Antal spelare");
         players = Integer.valueOf(input);
-
+        */
         pictureCount=width*height;
         this.score = new int [players];
         this.kort = new Kort [pictureCount];
@@ -52,14 +55,11 @@ public class Memory extends JFrame{
         option2.setActionCommand("exit");
         option2.addActionListener(buttons);
 
+
         nyttSpel();
 
         for(int i = 0; i < players; i++){
             playPanel.add(new Person(i + 1));
-        }
-
-        for(int i =0; i<k.length;i++){
-            gamePanel.add(k[i]);
         }
 
         main.setBackground(Color.BLACK);
@@ -77,33 +77,33 @@ public class Memory extends JFrame{
         setLocation(50, 50);
         setVisible(true);
         setSize(width * 80 + 100, height * 80 + 60);
-        setResizable(false);
+        setResizable(true);
         }
 
     public void nyttSpel(){
+        //Tar bort alla objekt i gamePanel
+        gamePanel.removeAll();
+
         //Nollställer score
         for(int sc:score){
             sc=0;
         }
 
         Verktyg.slumpOrdning(this.k);
-        for(int i = 0; i<pictureCount/2;i++){
+
+
+        for(int i = 0; i<(pictureCount/2);i++){
             kort[i] = this.k[i];
+            kort[pictureCount-(1+i)] = kort[i].copy();
         }
-        for(int i = pictureCount/2; i<pictureCount;i++){
-            kort[i]=k[i-(pictureCount/2)].copy();
-        }
-        Verktyg.slumpOrdning(k);
 
-
-
-        for(int i = 0; i < width*height; i++){
-                kort[i] = k[i];
-        }
-        System.out.println(k.length + " " + kort.length);
+        Verktyg.slumpOrdning(kort);
+        System.out.println(kort.length);
         for(Kort kor:kort){
             gamePanel.add(kor);
         }
+
+        this.repaint();
     }
 
 
@@ -128,7 +128,6 @@ public class Memory extends JFrame{
     private class Buttons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String str = e.getActionCommand();
-            System.out.println(str);
             if(str.equals("exit")){
                 System.exit(0);
             }else if(str.equals("new")){
