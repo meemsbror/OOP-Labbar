@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Arc2D;
 import java.io.File;
+import java.util.Random;
 
 public class Memory extends JFrame{
     public int width = 2;
@@ -47,7 +48,7 @@ public class Memory extends JFrame{
         optionPanel = new JPanel(new FlowLayout());
         gamePanel = new JPanel(new GridLayout(height,width));
         nyttSpel();
-        Buttons buttons = new Buttons();
+        Buttons buttons = new Buttons();        //ButtonsListener
         JButton option1 = new JButton("NEW");
         JButton option2 = new JButton("QUIT");
         option1.setActionCommand("new");
@@ -108,9 +109,10 @@ public class Memory extends JFrame{
     private class Person extends JPanel{
         public Person(int x){
             setLayout(new BorderLayout());
-
+            Random random = new Random();
+            Color rnd = new Color(random.nextInt(256),random.nextInt(256),random.nextInt(256));
             //BYTA FÄRG?******
-            setBackground(Color.ORANGE);
+            setBackground(rnd);
             setPreferredSize(new Dimension(100, height * 80));
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
             JLabel player = new JLabel("    Player " + x);
