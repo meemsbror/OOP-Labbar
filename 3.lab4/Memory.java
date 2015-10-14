@@ -102,7 +102,7 @@ public class Memory extends JFrame{
             gamePanel.add(kor);
         }
 
-        this.repaint();
+        gamePanel.repaint();
     }
 
     private class Person extends JPanel{
