@@ -1,24 +1,21 @@
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Arc2D;
 import java.io.File;
 
-/**
- * Created by admin on 2015-10-13.
- */
 public class Memory extends JFrame{
     public int width = 2;
     public int height = 6;
     public int players = 2;
-    public int playerTurn,pictureCount,x,y;
+    public int playerTurn,pictureCount;
     public int score[];
     public Kort kort [];
     private Kort k [];
-    JPanel main,gamePanel,playPanel,optionPanel;
+    JPanel main,playPanel,optionPanel,gamePanel;
 
     public Memory(){
 
@@ -27,7 +24,7 @@ public class Memory extends JFrame{
 
         k = new Kort[bilder.length];
         for(int i = 0; i<bilder.length;i++){
-            k[i]= new Kort ( new ImageIcon(bilder[i].getPath()), Kort.Status.SYNLIGT);
+            k[i]= new Kort ( new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
         }
 
 
@@ -48,9 +45,7 @@ public class Memory extends JFrame{
         main = new JPanel(new BorderLayout());
         playPanel = new JPanel(new GridLayout(players, 1));
         optionPanel = new JPanel(new FlowLayout());
-        gamePanel = new JPanel(new GridLayout(height, width));
-
-
+        gamePanel = new JPanel(new GridLayout(height,width));
         nyttSpel();
         Buttons buttons = new Buttons();
         JButton option1 = new JButton("NEW");
@@ -59,7 +54,6 @@ public class Memory extends JFrame{
         option1.addActionListener(buttons);
         option2.setActionCommand("exit");
         option2.addActionListener(buttons);
-
 
 
 
@@ -104,27 +98,12 @@ public class Memory extends JFrame{
         }
 
         Verktyg.slumpOrdning(kort);
-        System.out.println(kort.length);
         for(Kort kor:kort){
             gamePanel.add(kor);
         }
 
         this.repaint();
     }
-
-    private class cardListener  extends JPanel
-                                implements MouseListener{
-        public void mouseClicked(MouseEvent e){
-            x = (e.getX()-playPanel.getWidth())/(gamePanel.getWidth()/width);
-            y = e.getY()/(gamePanel.getHeight()/height);
-        }
-        public void mouseEntered(MouseEvent e){}
-        public void mousePressed(MouseEvent e){}
-        public void mouseExited(MouseEvent e){}
-        public void mouseReleased(MouseEvent e){}
-
-    }
-
 
     private class Person extends JPanel{
         public Person(int x){
@@ -153,6 +132,8 @@ public class Memory extends JFrame{
             }
         }
     }
+
+
 
     public static void main(String [] args){
         Memory memory = new Memory();}

@@ -1,11 +1,14 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by admin on 2015-10-08.
  */
-public class Kort extends JColorfulButton {
+public class Kort extends JColorfulButton
+                    implements MouseListener{
     public enum Status{ DOLT, SYNLIGT, SAKNAS}
     private Status status;
     private Icon icon;
@@ -14,6 +17,14 @@ public class Kort extends JColorfulButton {
 Exceptions?
 
  */
+    public	void	mouseClicked(MouseEvent e){
+
+        this.setStatus(Status.SAKNAS);
+        this.setStatus(Status.SYNLIGT);
+        this.repaint();
+        System.out.println("hej");
+    }
+
     public Kort(Icon icon){
         this.icon = icon;
         setStatus(Status.SAKNAS);
