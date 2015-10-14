@@ -1,17 +1,20 @@
+import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 /**
  * Created by admin on 2015-10-13.
  */
 public class Memory extends JFrame{
-    public int width = 3;
-    public int height = 2;
+    public int width = 2;
+    public int height = 6;
     public int players = 2;
-    public int playerTurn,pictureCount;
+    public int playerTurn,pictureCount,x,y;
     public int score[];
     public Kort kort [];
     private Kort k [];
@@ -45,9 +48,11 @@ public class Memory extends JFrame{
         main = new JPanel(new BorderLayout());
         playPanel = new JPanel(new GridLayout(players, 1));
         optionPanel = new JPanel(new FlowLayout());
-        gamePanel = new JPanel(new GridLayout(width, height));
-        Buttons buttons = new Buttons();
+        gamePanel = new JPanel(new GridLayout(height, width));
 
+
+        nyttSpel();
+        Buttons buttons = new Buttons();
         JButton option1 = new JButton("NEW");
         JButton option2 = new JButton("QUIT");
         option1.setActionCommand("new");
@@ -56,7 +61,8 @@ public class Memory extends JFrame{
         option2.addActionListener(buttons);
 
 
-        nyttSpel();
+
+
 
         for(int i = 0; i < players; i++){
             playPanel.add(new Person(i + 1));
@@ -76,7 +82,7 @@ public class Memory extends JFrame{
         setDefaultCloseOperation(3);
         setLocation(50, 50);
         setVisible(true);
-        setSize(width * 80 + 100, height * 80 + 60);
+        setSize(width * 150+100, height * 150);
         setResizable(true);
         }
 
@@ -106,6 +112,18 @@ public class Memory extends JFrame{
         this.repaint();
     }
 
+    private class cardListener  extends JPanel
+                                implements MouseListener{
+        public void mouseClicked(MouseEvent e){
+            x = (e.getX()-playPanel.getWidth())/(gamePanel.getWidth()/width);
+            y = e.getY()/(gamePanel.getHeight()/height);
+        }
+        public void mouseEntered(MouseEvent e){}
+        public void mousePressed(MouseEvent e){}
+        public void mouseExited(MouseEvent e){}
+        public void mouseReleased(MouseEvent e){}
+
+    }
 
 
     private class Person extends JPanel{
