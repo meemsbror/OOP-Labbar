@@ -12,13 +12,14 @@ public class Memory extends JFrame{
     public int playerTurn,pictureCount;
     public int score[];
     public Kort kort [], activeKort;
-    boolean kortShowing = false;
+    boolean timerStarted,kortShowing = false;
     JPanel main,playPanel,optionPanel,gamePanel;
     File [] bilder = new File ("bildmap").listFiles();
     Timer timer = new Timer(1500,new CardListener());
 
 
     public Memory(){
+        timerStarted=false;
         //Lägg till exceptions
         /*
         String input = JOptionPane.showInputDialog("Bredd?");
@@ -131,27 +132,28 @@ public class Memory extends JFrame{
     private class CardListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource().getClass().equals("class Kort")){
+            System.out.println("actionperformed");
+            System.out.println(e.getSource().getClass());
+            if(e.getSource().getClass().toString().equals("class Kort")){
                 Kort k = (Kort)e.getSource();
 
                 if(kortShowing){
-                    for(Kort ko : kort) {
-                        if(ko.getStatus() == Kort.Status.SYNLIGT && ko != k) {
-
-                            if(k.sammaBild(ko)){
-                                timer.start();
-                            }
-                        }
+                    if(k.sammaBild(activeKort)){
+                        timer.start();
+                        timerStarted=true;
                     }
                 }
                 else{
                     activeKort = k;
                 }
                 k.setStatus(Kort.Status.SYNLIGT);
-            }else if (e.getSource().getClass().equals("class Timer")){
+            }else if (e.getSource().getClass().toString().equals("class javax.swing.Timer")){
+                System.out.println("timern");
+                timer.stop();
                 for(Kort ko : kort) {
                     if(ko.getStatus() == Kort.Status.SYNLIGT && ko != activeKort) {
                         activeKort.sammaBild(ko);
+
                     }
                 }
             }
