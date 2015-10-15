@@ -11,13 +11,14 @@ public class Memory extends JFrame{
     public int players = 2;
     public int playerTurn,pictureCount;
     public int score[];
-    public Kort kort [];
+    public Kort kort [], activeKort;
+    boolean kortShowing = false;
     JPanel main,playPanel,optionPanel,gamePanel;
     File [] bilder = new File ("bildmap").listFiles();
+    Timer timer = new Timer(1500,new CardListener());
 
 
     public Memory(){
-
         //Lägg till exceptions
         /*
         String input = JOptionPane.showInputDialog("Bredd?");
@@ -65,7 +66,7 @@ public class Memory extends JFrame{
 
         add(main);
 
-        setDefaultCloseOperation(3);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocation(50,50);
         setVisible(true);
         setSize(width * 150+100, height * 150);
@@ -82,19 +83,16 @@ public class Memory extends JFrame{
         }
 
 
-
+        Verktyg.slumpOrdning(bilder);
         for(int i = 0; i<(pictureCount/2);i++){
             kort[i] = new Kort(new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
             kort[pictureCount-(1+i)] = kort[i].copy();
-        }
-
-        Verktyg.slumpOrdning(this.kort);
-
-        for(Kort k: kort){
-            k.setStatus(Kort.Status.DOLT);
+            kort[i].addActionListener(new CardListener());
+            kort[pictureCount-(1+i)].addActionListener(new CardListener());
         }
 
         Verktyg.slumpOrdning(kort);
+
         for(Kort kor:kort){
             gamePanel.add(kor);
         }
@@ -122,11 +120,40 @@ public class Memory extends JFrame{
     private class Buttons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String str = e.getActionCommand();
-
+            System.out.println(str);
             if(str.equals("exit")){
                 System.exit(0);
             }else if(str.equals("new")){
                   nyttSpel();
+            }
+        }
+    }
+    private class CardListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource().getClass().equals("class Kort")){
+                Kort k = (Kort)e.getSource();
+
+                if(kortShowing){
+                    for(Kort ko : kort) {
+                        if(ko.getStatus() == Kort.Status.SYNLIGT && ko != k) {
+
+                            if(k.sammaBild(ko)){
+                                timer.start();
+                            }
+                        }
+                    }
+                }
+                else{
+                    activeKort = k;
+                }
+                k.setStatus(Kort.Status.SYNLIGT);
+            }else if (e.getSource().getClass().equals("class Timer")){
+                for(Kort ko : kort) {
+                    if(ko.getStatus() == Kort.Status.SYNLIGT && ko != activeKort) {
+                        activeKort.sammaBild(ko);
+                    }
+                }
             }
         }
     }

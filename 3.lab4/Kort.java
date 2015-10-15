@@ -17,11 +17,6 @@ public class Kort extends JColorfulButton
 Exceptions?
 
  */
-    public	void	mouseClicked(MouseEvent e){
-
-        this.setStatus(Status.SAKNAS);
-        System.out.println("hej");
-    }
 
     public Kort(Icon icon){
         this.icon = icon;
@@ -41,6 +36,7 @@ Exceptions?
         }else if(this.status == Status.SAKNAS){
             setBackground(Color.WHITE);
         }else{
+            setBackground(Color.RED);
             setIcon(icon);
         }
     }
