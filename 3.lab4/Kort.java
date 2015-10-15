@@ -3,10 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-/**
- * Created by admin on 2015-10-08.
- */
 public class Kort extends JColorfulButton
                     implements MouseListener{
     public enum Status{ DOLT, SYNLIGT, SAKNAS}
@@ -43,14 +39,18 @@ Exceptions?
     public Status getStatus() {
         return status;
     }
+    public Icon getKortIcon(){
+        return icon;
+    }
     public Kort copy(){
         return new Kort(icon, getStatus());
     }
 
     public boolean sammaBild(Object o){
-        if(o.getClass().toString().equals(this.getClass().toString())){
+        if(o instanceof Kort){
             Kort k = (Kort)o;
-            return k.getIcon()==this.getIcon();
+            System.out.println("samma funkar ish");
+            return k.getKortIcon()==this.getKortIcon();
         }
         return false;
     }

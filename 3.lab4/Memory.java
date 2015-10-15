@@ -130,30 +130,35 @@ public class Memory extends JFrame{
         }
     }
     private class CardListener implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
             System.out.println("actionperformed");
             System.out.println(e.getSource().getClass());
-            if(e.getSource().getClass().toString().equals("class Kort")){
-                Kort k = (Kort)e.getSource();
+            if(e.getSource().getClass().toString().equals("class Kort")&&!timerStarted){
 
-                if(kortShowing){
-                    if(k.sammaBild(activeKort)){
-                        k.setStatus(Kort.Status.SAKNAS);
-                        activeKort.setStatus(Kort.Status.SAKNAS);
-                        kortShowing=false;
+                Kort k = (Kort)e.getSource();
+                if(k!=activeKort) {
+                    if (kortShowing) {
+                        if (k.sammaBild(activeKort)) {
+                            k.setStatus(Kort.Status.SAKNAS);
+                            activeKort.setStatus(Kort.Status.SAKNAS);
+                            kortShowing = false;
+                            score[playerTurn]++;
+                        } else {
+                            timer.restart();
+                            timer.start();
+                            timerStarted = true;
+                            playerTurn=(playerTurn+1)%players;
+                        }
+                    } else {
+                        activeKort = k;
                     }
-                    else{
-                        timer.restart();
-                        timer.start();
-                        timerStarted=true;
+                    if (!(k.getStatus() == Kort.Status.SAKNAS)) {
+                        k.setStatus(Kort.Status.SYNLIGT);
+                        kortShowing = true;
                     }
                 }
-                else{
-                    activeKort = k;
-                }
-                k.setStatus(Kort.Status.SYNLIGT);
-                kortShowing=true;
+                playPanel.repaint();
+
             }else if (e.getSource().getClass().toString().equals("class javax.swing.Timer")){
                 System.out.println("timern");
                 for(Kort ko : kort) {
@@ -167,6 +172,7 @@ public class Memory extends JFrame{
                 kortShowing=false;
             }
         }
+
     }
 
 
