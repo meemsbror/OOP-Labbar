@@ -139,6 +139,12 @@ public class Memory extends JFrame{
 
                 if(kortShowing){
                     if(k.sammaBild(activeKort)){
+                        k.setStatus(Kort.Status.SAKNAS);
+                        activeKort.setStatus(Kort.Status.SAKNAS);
+                        kortShowing=false;
+                    }
+                    else{
+                        timer.restart();
                         timer.start();
                         timerStarted=true;
                     }
@@ -147,15 +153,18 @@ public class Memory extends JFrame{
                     activeKort = k;
                 }
                 k.setStatus(Kort.Status.SYNLIGT);
+                kortShowing=true;
             }else if (e.getSource().getClass().toString().equals("class javax.swing.Timer")){
                 System.out.println("timern");
-                timer.stop();
                 for(Kort ko : kort) {
-                    if(ko.getStatus() == Kort.Status.SYNLIGT && ko != activeKort) {
-                        activeKort.sammaBild(ko);
+                    if(ko.getStatus() == Kort.Status.SYNLIGT) {
+                        ko.setStatus(Kort.Status.DOLT);
 
                     }
                 }
+                timer.stop();
+                timerStarted=false;
+                kortShowing=false;
             }
         }
     }
