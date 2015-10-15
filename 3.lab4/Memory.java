@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Arc2D;
 import java.io.File;
 import java.util.Random;
 
@@ -15,20 +12,11 @@ public class Memory extends JFrame{
     public int playerTurn,pictureCount;
     public int score[];
     public Kort kort [];
-    private Kort k [];
     JPanel main,playPanel,optionPanel,gamePanel;
+    File [] bilder = new File ("bildmap").listFiles();
+
 
     public Memory(){
-
-        File bildmap = new File("bildmap");
-        File [] bilder = bildmap.listFiles();
-
-        k = new Kort[bilder.length];
-        for(int i = 0; i<bilder.length;i++){
-            k[i]= new Kort ( new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
-        }
-
-
 
         //Lägg till exceptions
         /*
@@ -47,7 +35,8 @@ public class Memory extends JFrame{
         playPanel = new JPanel(new GridLayout(players, 1));
         optionPanel = new JPanel(new FlowLayout());
         gamePanel = new JPanel(new GridLayout(height,width));
-        nyttSpel();
+
+
         Buttons buttons = new Buttons();        //ButtonsListener
         JButton option1 = new JButton("NEW");
         JButton option2 = new JButton("QUIT");
@@ -63,6 +52,8 @@ public class Memory extends JFrame{
             playPanel.add(new Person(i + 1));
         }
 
+        nyttSpel();
+
         main.setBackground(Color.BLACK);
 
         optionPanel.add(option1);
@@ -75,7 +66,7 @@ public class Memory extends JFrame{
         add(main);
 
         setDefaultCloseOperation(3);
-        setLocation(50, 50);
+        setLocation(50,50);
         setVisible(true);
         setSize(width * 150+100, height * 150);
         setResizable(true);
@@ -90,20 +81,24 @@ public class Memory extends JFrame{
             sc=0;
         }
 
-        Verktyg.slumpOrdning(this.k);
 
 
         for(int i = 0; i<(pictureCount/2);i++){
-            kort[i] = this.k[i];
+            kort[i] = new Kort(new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
             kort[pictureCount-(1+i)] = kort[i].copy();
+        }
+
+        Verktyg.slumpOrdning(this.kort);
+
+        for(Kort k: kort){
+            k.setStatus(Kort.Status.DOLT);
         }
 
         Verktyg.slumpOrdning(kort);
         for(Kort kor:kort){
             gamePanel.add(kor);
         }
-        this.setSize(this.getWidth(),this.getHeight());
-        gamePanel.repaint();
+        revalidate();
     }
 
     private class Person extends JPanel{
@@ -127,6 +122,7 @@ public class Memory extends JFrame{
     private class Buttons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String str = e.getActionCommand();
+
             if(str.equals("exit")){
                 System.exit(0);
             }else if(str.equals("new")){

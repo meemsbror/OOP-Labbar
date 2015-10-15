@@ -20,8 +20,6 @@ Exceptions?
     public	void	mouseClicked(MouseEvent e){
 
         this.setStatus(Status.SAKNAS);
-        this.setStatus(Status.SYNLIGT);
-        this.repaint();
         System.out.println("hej");
     }
 
