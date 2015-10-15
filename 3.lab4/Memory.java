@@ -102,7 +102,7 @@ public class Memory extends JFrame{
         for(Kort kor:kort){
             gamePanel.add(kor);
         }
-
+        this.setSize(this.getWidth(),this.getHeight());
         gamePanel.repaint();
     }
 
