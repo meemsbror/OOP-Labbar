@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Memory extends JFrame{
     public int width = 2;
-    public int height = 6;
+    public int height = 2;
     public Person [] players;
     public int playerTurn,pictureCount;
     public int score[];
@@ -20,7 +20,7 @@ public class Memory extends JFrame{
 
     public Memory(){
         timerStarted=false;
-        int players = 3;
+        int players = 2;
         //Lägg till exceptions
         /*
         String input = JOptionPane.showInputDialog("Bredd?");
@@ -70,10 +70,9 @@ public class Memory extends JFrame{
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocation(50,50);
-        setVisible(true);
         setSize(width * 150+100, height * 150);
-        setResizable(true);
-        System.out.println(playPanel.getWidth());
+        setVisible(true);
+        setResizable(false);
         }
     
     public void newTurn(){
@@ -173,6 +172,7 @@ public class Memory extends JFrame{
                             players[playerTurn].changeTurn(false);
                             playerTurn=(playerTurn+1)%players.length;
                             players[playerTurn].changeTurn(true);
+                            activeKort=null;
                         }
                     } else {
                         activeKort = k;
