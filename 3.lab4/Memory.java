@@ -8,18 +8,19 @@ import java.util.Random;
 public class Memory extends JFrame{
     public int width = 2;
     public int height = 6;
-    public int players = 2;
+    public Person [] players;
     public int playerTurn,pictureCount;
     public int score[];
     public Kort kort [], activeKort;
     boolean timerStarted,kortShowing = false;
     JPanel main,playPanel,optionPanel,gamePanel;
     File [] bilder = new File ("bildmap").listFiles();
-    Timer timer = new Timer(1500,new CardListener());
+    Timer timer = new Timer(1500,new Listener());
 
 
     public Memory(){
         timerStarted=false;
+        int players = 3;
         //Lägg till exceptions
         /*
         String input = JOptionPane.showInputDialog("Bredd?");
@@ -32,6 +33,7 @@ public class Memory extends JFrame{
         pictureCount=width*height;
         this.score = new int [players];
         this.kort = new Kort [pictureCount];
+        this.players = new Person[players];
 
         main = new JPanel(new BorderLayout());
         playPanel = new JPanel(new GridLayout(players, 1));
@@ -51,13 +53,12 @@ public class Memory extends JFrame{
 
 
         for(int i = 0; i < players; i++){
-            playPanel.add(new Person(i + 1));
+            this.players[i]=new Person(i + 1);
+            playPanel.add(this.players[i]);
         }
+        this.players[playerTurn].changeTurn(true);
 
         nyttSpel();
-
-        main.setBackground(Color.BLACK);
-
         optionPanel.add(option1);
         optionPanel.add(option2);
 
@@ -72,15 +73,21 @@ public class Memory extends JFrame{
         setVisible(true);
         setSize(width * 150+100, height * 150);
         setResizable(true);
+        System.out.println(playPanel.getWidth());
         }
+    
+    public void newTurn(){
+        
+    }
 
     public void nyttSpel(){
         //Tar bort alla objekt i gamePanel
         gamePanel.removeAll();
 
         //Nollställer score
-        for(int sc:score){
-            sc=0;
+        for(int i = 0; i<players.length;i++){
+            score[i]=0;
+            players[i].updateScore(i+1);
         }
 
 
@@ -88,8 +95,8 @@ public class Memory extends JFrame{
         for(int i = 0; i<(pictureCount/2);i++){
             kort[i] = new Kort(new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
             kort[pictureCount-(1+i)] = kort[i].copy();
-            kort[i].addActionListener(new CardListener());
-            kort[pictureCount-(1+i)].addActionListener(new CardListener());
+            kort[i].addActionListener(new Listener());
+            kort[pictureCount-(1+i)].addActionListener(new Listener());
         }
 
         Verktyg.slumpOrdning(kort);
@@ -101,19 +108,37 @@ public class Memory extends JFrame{
     }
 
     private class Person extends JPanel{
+        JLabel scoren;
+        JLabel player;
+        Color rnd;
         public Person(int x){
             setLayout(new BorderLayout());
             Random random = new Random();
-            Color rnd = new Color(random.nextInt(256),random.nextInt(256),random.nextInt(256));
+            rnd = new Color(random.nextInt(256),random.nextInt(256),random.nextInt(256));
             //BYTA FÄRG?******
             setBackground(rnd);
             setPreferredSize(new Dimension(100, height * 80));
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            JLabel player = new JLabel("    Player " + x);
-            JLabel scoren = new JLabel("    " + score[x-1]);
+            player = new JLabel("    Player " + x);
+            scoren = new JLabel("    " + score[x-1]);
 
             add(scoren, BorderLayout.CENTER);
             add(player, BorderLayout.NORTH);
+        }
+        public void updateScore(int x){
+            this.remove(scoren);
+            scoren = new JLabel("    " + score[x-1]);
+            add(scoren, BorderLayout.CENTER);
+            this.repaint();
+            this.revalidate();
+        }
+        public void changeTurn(boolean b){
+            if(b){
+                this.setBackground(Color.red);
+            }
+            else{
+                this.setBackground(rnd);
+            }
         }
     }
 
@@ -121,7 +146,6 @@ public class Memory extends JFrame{
     private class Buttons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String str = e.getActionCommand();
-            System.out.println(str);
             if(str.equals("exit")){
                 System.exit(0);
             }else if(str.equals("new")){
@@ -129,10 +153,8 @@ public class Memory extends JFrame{
             }
         }
     }
-    private class CardListener implements ActionListener {
+    private class Listener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.out.println("actionperformed");
-            System.out.println(e.getSource().getClass());
             if(e.getSource().getClass().toString().equals("class Kort")&&!timerStarted){
 
                 Kort k = (Kort)e.getSource();
@@ -143,11 +165,14 @@ public class Memory extends JFrame{
                             activeKort.setStatus(Kort.Status.SAKNAS);
                             kortShowing = false;
                             score[playerTurn]++;
+                            players[playerTurn].updateScore(playerTurn+1);
                         } else {
                             timer.restart();
                             timer.start();
                             timerStarted = true;
-                            playerTurn=(playerTurn+1)%players;
+                            players[playerTurn].changeTurn(false);
+                            playerTurn=(playerTurn+1)%players.length;
+                            players[playerTurn].changeTurn(true);
                         }
                     } else {
                         activeKort = k;
@@ -157,10 +182,9 @@ public class Memory extends JFrame{
                         kortShowing = true;
                     }
                 }
-                playPanel.repaint();
+
 
             }else if (e.getSource().getClass().toString().equals("class javax.swing.Timer")){
-                System.out.println("timern");
                 for(Kort ko : kort) {
                     if(ko.getStatus() == Kort.Status.SYNLIGT) {
                         ko.setStatus(Kort.Status.DOLT);

@@ -49,7 +49,6 @@ Exceptions?
     public boolean sammaBild(Object o){
         if(o instanceof Kort){
             Kort k = (Kort)o;
-            System.out.println("samma funkar ish");
             return k.getKortIcon()==this.getKortIcon();
         }
         return false;
