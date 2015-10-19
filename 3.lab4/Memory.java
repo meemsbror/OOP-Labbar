@@ -97,23 +97,14 @@ public class Memory extends JFrame{
             for (int i = 0; i < aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.length(); i++) {
                 switch (aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.charAt(i)) {
                     case '1':
-                        break;
                     case '2':
-                        break;
                     case '3':
-                        break;
                     case '4':
-                        break;
                     case '5':
-                        break;
                     case '6':
-                        break;
                     case '7':
-                        break;
                     case '8':
-                        break;
                     case '9':
-                        break;
                     case '0':
                         break;
                     default:
@@ -147,7 +138,8 @@ public class Memory extends JFrame{
             kort[i].addActionListener(new Listener());
             kort[pictureCount-(1+i)].addActionListener(new Listener());
         }
-        System.out.println(bilder.length);
+        //Used for debugging
+        //System.out.println(bilder.length);
 
         Verktyg.slumpOrdning(kort);
 
@@ -233,7 +225,11 @@ public class Memory extends JFrame{
                                         tempI = i;
                                     }
                                 }
-                                int dialogButton = JOptionPane.showConfirmDialog(null, "Spelare nummer " + (playerTurn+1) + " vann\nVill ni spela igen? ;)","Hejja", JOptionPane.YES_NO_OPTION);
+                                int dialogButton = JOptionPane.showConfirmDialog(null, "Spelare nummer "
+                                                                                    + (playerTurn+1)
+                                                                                    + " vann\nVill ni spela igen? ;)",
+                                                                                    "Hejja",
+                                                                                    JOptionPane.YES_NO_OPTION);
                                 if(dialogButton == JOptionPane.YES_OPTION) {
                                     nyttSpel();
                                 }else{
