@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Memory extends JFrame{
     public int width = 2;
-    public int height = 2;
+    public int height = 3;
     public Person [] players;
     public int playerTurn,pictureCount;
     public int score[];
@@ -21,15 +21,29 @@ public class Memory extends JFrame{
     public Memory(){
         timerStarted=false;
         int players = 2;
-        //Lägg till exceptions
-        /*
-        String input = JOptionPane.showInputDialog("Bredd?");
-        width = Integer.valueOf(input);
-        input = JOptionPane.showInputDialog("Höjd");
-        height = Integer.valueOf(input);
-        input = JOptionPane.showInputDialog("Antal spelare");
-        players = Integer.valueOf(input);
-        */
+        while(true) {
+                //Lägg till exceptions
+            String input = JOptionPane.showInputDialog("Bredd?");
+            if(!isNumerical(input)) {
+                continue;
+            }
+            width = Integer.valueOf(input);
+            input = JOptionPane.showInputDialog("Höjd");
+            if(!isNumerical(input)) {
+                continue;
+            }
+            height = Integer.valueOf(input);
+            input = JOptionPane.showInputDialog("Antal spelare");
+            if(!isNumerical(input)) {
+                continue;
+            }
+            players = Integer.valueOf(input);
+            if((height*width) % 2 == 0 && height*width <= 36){
+                break;
+            }else{
+                JOptionPane.showMessageDialog(null, "Inte jämnt antal ju..");
+            }
+        }
         pictureCount=width*height;
         this.score = new int [players];
         this.kort = new Kort [pictureCount];
@@ -70,16 +84,36 @@ public class Memory extends JFrame{
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocation(50,50);
-        setSize(width * 150+100, height * 150);
+        setSize(width * 150 + 100, height * 150);
         setVisible(true);
         setResizable(false);
         }
     
-    public void newTurn(){
-        
+    public boolean isNumerical(String aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow) {
+        for (int i = 0; i < aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.length(); i++) {
+            switch (aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.charAt(i)){
+                case '1': break;
+                case '2': break;
+                case '3': break;
+                case '4': break;
+                case '5': break;
+                case '6': break;
+                case '7': break;
+                case '8': break;
+                case '9': break;
+                case '0': break;
+                    default: return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public void nyttSpel(){
+        kortShowing = false;
+        timerStarted = false;
+        timer.stop();
+        activeKort = null;
         //Tar bort alla objekt i gamePanel
         gamePanel.removeAll();
 
@@ -97,6 +131,7 @@ public class Memory extends JFrame{
             kort[i].addActionListener(new Listener());
             kort[pictureCount-(1+i)].addActionListener(new Listener());
         }
+        System.out.println(bilder.length);
 
         Verktyg.slumpOrdning(kort);
 
@@ -114,7 +149,6 @@ public class Memory extends JFrame{
             setLayout(new BorderLayout());
             Random random = new Random();
             rnd = new Color(random.nextInt(256),random.nextInt(256),random.nextInt(256));
-            //BYTA FÄRG?******
             setBackground(rnd);
             setPreferredSize(new Dimension(100, height * 80));
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -157,7 +191,7 @@ public class Memory extends JFrame{
             if(e.getSource().getClass().toString().equals("class Kort")&&!timerStarted){
 
                 Kort k = (Kort)e.getSource();
-                if(k!=activeKort) {
+                if(k!=activeKort && k.getStatus() != Kort.Status.SAKNAS) {
                     if (kortShowing) {
                         if (k.sammaBild(activeKort)) {
                             k.setStatus(Kort.Status.SAKNAS);
@@ -165,6 +199,29 @@ public class Memory extends JFrame{
                             kortShowing = false;
                             score[playerTurn]++;
                             players[playerTurn].updateScore(playerTurn+1);
+                            boolean temp = false;
+                            for(Kort kot : kort){
+                                if(!(kot.getStatus() == Kort.Status.SAKNAS)) {
+                                    temp = true;
+                                    break;
+                                }
+                            }
+                            if (!temp) {
+                                int tempInt = 0;
+                                int tempI;
+                                for(int i = 0; score.length-1 > i; i++){
+                                    if(score[i]>tempInt) {
+                                        tempInt = score[i];
+                                        tempI = i;
+                                    }
+                                }
+                                int dialogButton = JOptionPane.showConfirmDialog(null, "Spelare nummer " + (playerTurn+1) + " vann\nVill ni spela igen? ;)","Hejja", JOptionPane.YES_NO_OPTION);
+                                if(dialogButton == JOptionPane.YES_OPTION) {
+                                    nyttSpel();
+                                }else{
+                                    System.exit(3);
+                                }
+                            }
                         } else {
                             timer.restart();
                             timer.start();

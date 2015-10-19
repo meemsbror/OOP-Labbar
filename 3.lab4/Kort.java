@@ -32,7 +32,7 @@ Exceptions?
         }else if(this.status == Status.SAKNAS){
             setBackground(Color.WHITE);
         }else{
-            setBackground(Color.RED);
+            setBackground(Color.BLACK);
             setIcon(icon);
         }
     }
