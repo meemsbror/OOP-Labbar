@@ -41,10 +41,17 @@ public class Memory extends JFrame{
                 continue;
             }
             players = Integer.valueOf(input);
-            if((height*width) % 2 == 0 && height*width <= 36){
+            if(!(players>9)){
+
+            }
+            if(((height*width) % 2 == 0 && height*width <= 36)&&(players<10)){
                 break;
-            }else{
+            }else if(!((height*width) % 2 == 0 )){
                 JOptionPane.showMessageDialog(null, "Inte jämnt antal ju..");
+            }else if(!(height*width <= 36)){
+                JOptionPane.showMessageDialog(null, "Så många bilder har vi inte!");
+            }else{
+                JOptionPane.showMessageDialog(null, "Lite många spelare där eller..?");
             }
         }
         pictureCount=width*height;
@@ -207,8 +214,6 @@ public class Memory extends JFrame{
                             kortShowing = false;
                             score[playerTurn]++;
                             players[playerTurn].updateScore(playerTurn+1);
-                            //Detta är buggat, om spelare 2 drar kortet och har mindre poäng än spelare 1 vinner
-                            //spelare 2 ändå.
                             boolean temp = false;
                             for(Kort kot : kort){
                                 if(!(kot.getStatus() == Kort.Status.SAKNAS)) {
@@ -218,16 +223,33 @@ public class Memory extends JFrame{
                             }
                             if (!temp) {
                                 int tempInt = 0;
-                                int tempI;
+                                String winners="";
+                                String [] winnersArr;
                                 for(int i = 0; score.length-1 > i; i++){
                                     if(score[i]>tempInt) {
                                         tempInt = score[i];
-                                        tempI = i;
                                     }
                                 }
+                                for(int i = 0; score.length > i; i++){
+                                    if(score[i]==tempInt){
+                                        winners+=(i+1)+" ";
+                                    }
+                                }
+                                winners.trim();
+                                winnersArr=winners.split(" ");
+                                if(winnersArr.length>1){
+                                    winners="";
+                                    for(int i=0;i<winnersArr.length-1;i++){
+                                        winners+=winnersArr[i]+" ";
+                                    }
+                                    winners+= "och " +winnersArr[winnersArr.length-1]+" hamna lika";
+                                }else{
+                                    winners+="vann";
+                                }
+
                                 int dialogButton = JOptionPane.showConfirmDialog(null, "Spelare nummer "
-                                                                                    + (playerTurn+1)
-                                                                                    + " vann\nVill ni spela igen? ;)",
+                                                                                    + (winners)
+                                                                                    + "\nVill ni spela igen? ;)",
                                                                                     "Hejja",
                                                                                     JOptionPane.YES_NO_OPTION);
                                 if(dialogButton == JOptionPane.YES_OPTION) {
