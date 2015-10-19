@@ -239,10 +239,10 @@ public class Memory extends JFrame{
                                 winnersArr=winners.split(" ");
                                 if(winnersArr.length>1){
                                     winners="";
-                                    for(int i=0;i<winnersArr.length-1;i++){
-                                        winners+=winnersArr[i]+" ";
+                                    for(int i=0;i<winnersArr.length-2;i++){
+                                        winners+=winnersArr[i]+",";
                                     }
-                                    winners+= "och " +winnersArr[winnersArr.length-1]+" hamna lika";
+                                    winners+= winnersArr[winnersArr.length-2]+ " och " +winnersArr[winnersArr.length-1]+" hamna lika";
                                 }else{
                                     winners+="vann";
                                 }
