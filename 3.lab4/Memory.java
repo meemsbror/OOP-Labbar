@@ -25,16 +25,19 @@ public class Memory extends JFrame{
                 //Lägg till exceptions
             String input = JOptionPane.showInputDialog("Bredd?");
             if(!isNumerical(input)) {
+                JOptionPane.showMessageDialog(null, "Var god och mata enbart in siffror");
                 continue;
             }
             width = Integer.valueOf(input);
             input = JOptionPane.showInputDialog("Höjd");
             if(!isNumerical(input)) {
+                JOptionPane.showMessageDialog(null, "Var god och mata enbart in siffror");
                 continue;
             }
             height = Integer.valueOf(input);
             input = JOptionPane.showInputDialog("Antal spelare");
             if(!isNumerical(input)) {
+                JOptionPane.showMessageDialog(null, "Var god och mata enbart in siffror");
                 continue;
             }
             players = Integer.valueOf(input);
@@ -90,21 +93,34 @@ public class Memory extends JFrame{
         }
     
     public boolean isNumerical(String aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow) {
-        for (int i = 0; i < aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.length(); i++) {
-            switch (aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.charAt(i)){
-                case '1': break;
-                case '2': break;
-                case '3': break;
-                case '4': break;
-                case '5': break;
-                case '6': break;
-                case '7': break;
-                case '8': break;
-                case '9': break;
-                case '0': break;
-                    default: return false;
+        if(aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow!=null) {
+            for (int i = 0; i < aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.length(); i++) {
+                switch (aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.charAt(i)) {
+                    case '1':
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        break;
+                    case '4':
+                        break;
+                    case '5':
+                        break;
+                    case '6':
+                        break;
+                    case '7':
+                        break;
+                    case '8':
+                        break;
+                    case '9':
+                        break;
+                    case '0':
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
