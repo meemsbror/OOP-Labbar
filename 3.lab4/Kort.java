@@ -10,7 +10,6 @@ public class Kort extends JColorfulButton
     private Icon icon;
 /*
 
-Exceptions?
 
  */
 

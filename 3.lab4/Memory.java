@@ -215,6 +215,8 @@ public class Memory extends JFrame{
                             kortShowing = false;
                             score[playerTurn]++;
                             players[playerTurn].updateScore(playerTurn+1);
+                            //Detta är buggat, om spelare 2 drar kortet och har mindre poäng än spelare 1 vinner
+                            //spelare 2 ändå.
                             boolean temp = false;
                             for(Kort kot : kort){
                                 if(!(kot.getStatus() == Kort.Status.SAKNAS)) {
