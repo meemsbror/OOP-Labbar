@@ -1,8 +1,8 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 public class Kort extends JColorfulButton
                     implements MouseListener{
     public enum Status{ DOLT, SYNLIGT, SAKNAS}

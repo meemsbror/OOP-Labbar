@@ -6,21 +6,32 @@ import java.io.File;
 import java.util.Random;
 
 public class Memory extends JFrame{
-    public int width = 2;
-    public int height = 3;
+
+    public int width, height, playerTurn, pictureCount, score[];
+
+    //Alla spelare
     public Person [] players;
-    public int playerTurn,pictureCount;
-    public int score[];
+
+    //Alla kort
     public Kort kort [], activeKort;
+
     boolean timerStarted,kortShowing = false;
     JPanel main,playPanel,optionPanel,gamePanel;
+
+    //Alla bildfiler
     File [] bilder = new File ("bildmap").listFiles();
+
     Timer timer = new Timer(1500,new Listener());
 
 
     public Memory(){
         timerStarted=false;
-        int players = 2;
+        int players;
+
+        /*
+        Tar indata och kollar om datan är giltig. Om den inte är det
+        skriver den ut vad som är fel och ber om giltig indata.
+         */
         while(true) {
                 //Lägg till exceptions
             String input = JOptionPane.showInputDialog("Bredd?");
@@ -44,7 +55,7 @@ public class Memory extends JFrame{
             if(!(players>9)){
 
             }
-            if(((height*width) % 2 == 0 && height*width <= 36)&&(players<10)){
+            if(((height*width) % 2 == 0 && height*width <= 36) && (players<10)){
                 break;
             }else if(!((height*width) % 2 == 0 )){
                 JOptionPane.showMessageDialog(null, "Inte jämnt antal ju..");
@@ -54,7 +65,10 @@ public class Memory extends JFrame{
                 JOptionPane.showMessageDialog(null, "Lite många spelare där eller..?");
             }
         }
-        pictureCount=width*height;
+        pictureCount = width * height;
+        /*
+        Initierar arrayer med kort och spelare med rätt längd.
+         */
         this.score = new int [players];
         this.kort = new Kort [pictureCount];
         this.players = new Person[players];
@@ -64,8 +78,11 @@ public class Memory extends JFrame{
         optionPanel = new JPanel(new FlowLayout());
         gamePanel = new JPanel(new GridLayout(height,width));
 
+        /*
+        Skapar 2 knappar (new och quit) samt ger dem actionListener och actionCommand.
+         */
 
-        Buttons buttons = new Buttons();        //ButtonsListener
+        Buttons buttons = new Buttons();
         JButton option1 = new JButton("NEW");
         JButton option2 = new JButton("QUIT");
         option1.setActionCommand("new");
@@ -74,15 +91,25 @@ public class Memory extends JFrame{
         option2.addActionListener(buttons);
 
 
-
-
+        /*
+        Lägger till spelare i players arrayen.
+         */
         for(int i = 0; i < players; i++){
             this.players[i]=new Person(i + 1);
             playPanel.add(this.players[i]);
         }
+
+        /*
+        Byter färg på spelaren vars tur det är, altså spelare 1 just nu.
+         */
         this.players[playerTurn].changeTurn(true);
 
+        /*
+        Skapar ett nytt spel. Återställer vissa värden. Till exempel:
+        Vilka bilder som visas, poängen spelarna har och lägger ut de nya korten (ändrar allas kort status till DOLT)
+         */
         nyttSpel();
+
         optionPanel.add(option1);
         optionPanel.add(option2);
 
@@ -98,27 +125,18 @@ public class Memory extends JFrame{
         setVisible(true);
         setResizable(false);
         }
-    
-    public boolean isNumerical(String aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow) {
-        if(aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow!=null) {
-            for (int i = 0; i < aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.length(); i++) {
-                switch (aTemporaryStringJustForThisMethodBecauseWeDontNeedItLaterYouKnow.charAt(i)) {
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
-                    case '5':
-                    case '6':
-                    case '7':
-                    case '8':
-                    case '9':
-                    case '0':
-                        break;
-                    default:
-                        return false;
+
+
+    //Denna metod säger om en sträng endast innehåller siffror.
+    public boolean isNumerical(String temp) {
+        String allNumbers = "1234567890";
+        if(temp.length()!=0) {
+            for (int i = 0; i < temp.length(); i++) {
+                if((allNumbers.indexOf(temp.charAt(i))==-1)){
+                    return false;
                 }
-                return true;
             }
+            return true;
         }
         return false;
     }
@@ -156,13 +174,20 @@ public class Memory extends JFrame{
         revalidate();
     }
 
+
+    /*
+    En privat klass som beskriver en spelare.
+     */
     private class Person extends JPanel{
         JLabel scoren;
         JLabel player;
         Color rnd;
         public Person(int x){
+
             setLayout(new BorderLayout());
             Random random = new Random();
+
+            //Random färg är kul.
             rnd = new Color(random.nextInt(256),random.nextInt(256),random.nextInt(256));
             setBackground(rnd);
             setPreferredSize(new Dimension(100, height * 80));
@@ -173,6 +198,7 @@ public class Memory extends JFrame{
             add(scoren, BorderLayout.CENTER);
             add(player, BorderLayout.NORTH);
         }
+
         public void updateScore(int x){
             this.remove(scoren);
             scoren = new JLabel("    " + score[x-1]);
@@ -180,6 +206,8 @@ public class Memory extends JFrame{
             this.repaint();
             this.revalidate();
         }
+
+        //Byter färg på bakgrunden på den spelare vars tur det är.
         public void changeTurn(boolean b){
             if(b){
                 this.setBackground(Color.red);
@@ -191,6 +219,9 @@ public class Memory extends JFrame{
     }
 
 
+    /*
+    ActionListenern som knapparna new och exit anropar.
+     */
     private class Buttons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String str = e.getActionCommand();
@@ -201,6 +232,9 @@ public class Memory extends JFrame{
             }
         }
     }
+    /*
+    ActionListenern som korten samt timern anropar. Kollar om två kort som visas är densamma osv.
+    */
     private class Listener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource().getClass().toString().equals("class Kort")&&!timerStarted){
@@ -242,7 +276,7 @@ public class Memory extends JFrame{
                                     for(int i=0;i<winnersArr.length-2;i++){
                                         winners+=winnersArr[i]+",";
                                     }
-                                    winners+= winnersArr[winnersArr.length-2]+ " och " +winnersArr[winnersArr.length-1]+" hamna lika";
+                                    winners+= winnersArr[winnersArr.length-2]+ " och " +winnersArr[winnersArr.length-1]+" fick lika mycket poäng";
                                 }else{
                                     winners+="vann";
                                 }
