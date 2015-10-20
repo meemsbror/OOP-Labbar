@@ -158,10 +158,18 @@ public class Memory extends JFrame{
 
         Verktyg.slumpOrdning(bilder);
         for(int i = 0; i<(pictureCount/2);i++){
-            kort[i] = new Kort(new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
-            kort[pictureCount-(1+i)] = kort[i].copy();
+            String [] tmp = bilder[i].getName().split("\\.");
+            int j=i;
+            if(tmp.length>1 && (tmp[1].equals("jpg")||tmp[1].equals("png"))) {
+                kort[i] = new Kort(new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
+            }
+            else{
+                kort[i] = new Kort(new ImageIcon(bilder[bilder.length-j].getPath()), Kort.Status.DOLT);
+                j++;
+            }
+            kort[pictureCount - (1 + i)] = kort[i].copy();
             kort[i].addActionListener(new Listener());
-            kort[pictureCount-(1+i)].addActionListener(new Listener());
+            kort[pictureCount - (1 + i)].addActionListener(new Listener());
         }
         //Used for debugging
         //System.out.println(bilder.length);
