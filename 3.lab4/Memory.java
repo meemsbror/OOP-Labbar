@@ -35,6 +35,7 @@ public class Memory extends JFrame{
         while(true) {
                 //Lägg till exceptions
             String input = JOptionPane.showInputDialog("Bredd?");
+
             if(!isNumerical(input)) {
                 JOptionPane.showMessageDialog(null, "Var god och mata enbart in siffror");
                 continue;
@@ -130,13 +131,16 @@ public class Memory extends JFrame{
     //Denna metod säger om en sträng endast innehåller siffror.
     public boolean isNumerical(String temp) {
         String allNumbers = "1234567890";
-        if(temp.length()!=0) {
-            for (int i = 0; i < temp.length(); i++) {
-                if((allNumbers.indexOf(temp.charAt(i))==-1)){
-                    return false;
+        if(temp!=null) {
+            if (temp.length() != 0) {
+                for (int i = 0; i < temp.length(); i++) {
+                    if ((allNumbers.indexOf(temp.charAt(i)) == -1)) {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
+            return false;
         }
         return false;
     }
@@ -155,11 +159,11 @@ public class Memory extends JFrame{
             players[i].updateScore(i+1);
         }
 
-
+        //Slumpar vilka bilder som ska vara med samt sparar bilderna samt dubbletten i en array
         Verktyg.slumpOrdning(bilder);
         for(int i = 0; i<(pictureCount/2);i++){
             String [] tmp = bilder[i].getName().split("\\.");
-            int j=i;
+            int j=1;
             if(tmp.length>1 && (tmp[1].equals("jpg")||tmp[1].equals("png"))) {
                 kort[i] = new Kort(new ImageIcon(bilder[i].getPath()), Kort.Status.DOLT);
             }
@@ -171,11 +175,8 @@ public class Memory extends JFrame{
             kort[i].addActionListener(new Listener());
             kort[pictureCount - (1 + i)].addActionListener(new Listener());
         }
-        //Used for debugging
-        //System.out.println(bilder.length);
-
         Verktyg.slumpOrdning(kort);
-
+        //Lägger ut bilderna på spelplanen
         for(Kort kor:kort){
             gamePanel.add(kor);
         }
@@ -206,7 +207,7 @@ public class Memory extends JFrame{
             add(scoren, BorderLayout.CENTER);
             add(player, BorderLayout.NORTH);
         }
-
+        //Updaterar poängen för en specifik spelare
         public void updateScore(int x){
             this.remove(scoren);
             scoren = new JLabel("    " + score[x-1]);
@@ -250,6 +251,7 @@ public class Memory extends JFrame{
                 Kort k = (Kort)e.getSource();
                 if(k!=activeKort && k.getStatus() != Kort.Status.SAKNAS) {
                     if (kortShowing) {
+                        //Hanterar i fall de två kort som visas är likadana och kollar även ifall någon har vunnit.
                         if (k.sammaBild(activeKort)) {
                             k.setStatus(Kort.Status.SAKNAS);
                             activeKort.setStatus(Kort.Status.SAKNAS);
@@ -300,7 +302,8 @@ public class Memory extends JFrame{
                                     System.exit(3);
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             timer.restart();
                             timer.start();
                             timerStarted = true;
@@ -318,7 +321,7 @@ public class Memory extends JFrame{
                     }
                 }
 
-
+            //Hanterar Timerns actionevent
             }else if (e.getSource().getClass().toString().equals("class javax.swing.Timer")){
                 for(Kort ko : kort) {
                     if(ko.getStatus() == Kort.Status.SYNLIGT) {
