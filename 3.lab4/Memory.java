@@ -72,9 +72,6 @@ public class Memory extends JFrame{
          */
         this.players[playerTurn].changeTurn(true);
 
-        /*
-        Skapar 2 knappar (new och quit) samt ger dem actionListener och actionCommand.
-         */
         createButtons();
 
 
@@ -92,6 +89,9 @@ public class Memory extends JFrame{
         setVisible(true);
 
     }
+    /*
+    Skapar 2 knappar (new och quit) samt ger dem actionListener och actionCommand.
+    */
     public void createButtons(){
         Buttons buttons = new Buttons();
         JButton option1 = new JButton("NEW");
